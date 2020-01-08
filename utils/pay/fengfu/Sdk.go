@@ -3,12 +3,12 @@ package fengfu
 import (
 	"encoding/json"
 	"fmt"
-	"time"
 	_ "github.com/qnsoft/online_pay/routers"
 	"github.com/qnsoft/online_pay/utils/pay/paytool"
 	date "github.com/qnsoft/web_api/utils/DateHelper"
 	"github.com/qnsoft/web_api/utils/ErrorHelper"
 	"github.com/qnsoft/web_api/utils/StringHelper"
+	"time"
 )
 
 /*
@@ -95,7 +95,8 @@ func (pay *FengFuPay) CardIn(_model paytool.CardModel, _channelType string, _mon
 	paramsData["tel"] = _model.Phone
 	paramsData["extraFee"] = _extraFee //交易手续费 0.5%传0.5 （余额按手续费四舍五入）
 	if _channelType == "" {
-		_channelType = "ffqr"
+		//_channelType = "ffqrdh"
+		_channelType = "fk" //默认走大额
 	}
 	paramsData["channelType"] = _channelType     //通道标示小额channelType：ffqr大额channelType：ffkj
 	paramsData["holderName"] = _model.HolderName //姓名
@@ -260,3 +261,5 @@ func (pay *FengFuPay) CardSignConfirm(_model paytool.CardModel, _channelType, _m
 // 	_json, _ := Rsa_Pri(_get_data, string(PrivateKey))
 // 	fmt.Println(string(_json))
 // }
+
+//--------------------丰付套现通道----------------------------//

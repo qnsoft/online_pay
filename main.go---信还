@@ -1,0 +1,85 @@
+package main
+
+import (
+	"fmt"
+	_ "github.com/qnsoft/online_pay/routers"
+	date "github.com/qnsoft/web_api/utils/DateHelper"
+	php2go "github.com/qnsoft/web_api/utils/Php2go"
+	"github.com/qnsoft/web_api/utils/StringHelper"
+	"github.com/qnsoft/web_api/utils/WebHelper"
+	"sort"
+	"strconv"
+	"time"
+
+	"github.com/astaxie/beego"
+)
+
+func main() {
+	httpURL := "https://www.dh0102.com/oss-transaction/gateway/{fastpayOpenToken2BySms}"
+	_HeaderData := map[string]string{"Content-Type": "application/json"}
+	_paramsData := GetBaseParam()
+	_paramsData["method"] = "fastpayOpenToken2BySms"                                                             //调用的方法
+	_paramsData["mid"] = "000010000000001"                                                                       //商户号
+	_paramsData["idcard"] = "410185198209190514"                                                                 //身份证
+	_paramsData["agencyType"] = "hxkjdh"                                                                         //通道标示
+	_paramsData["accountNumber"] = "6258091711738406"                                                            //信用卡号
+	_paramsData["holderName"] = "宋晓辉"                                                                            //姓名
+	_paramsData["tel"] = "13938202388"                                                                           //手机号
+	_paramsData["cvv2"] = "903"                                                                                  //cvv
+	_paramsData["expired"] = "0423"                                                                              //有效期 YYMM 格式
+	_paramsData["bizOrderNumber"] = date.FormatDate(time.Now(), "yyyyMMddHHmmss") + StringHelper.GetRandomNum(4) //订单号
+	_data := SignParameters(_paramsData, false)
+	signStr := "{'content':'" + _data + "','key':'96ea552bcd55253ba90bbcffcf81e654'},”utf-8”"
+	sign := php2go.Md5(signStr)
+	_Params := map[string]interface{}{"content": _data, "sign": sign}
+	_req := WebHelper.HttpPost(httpURL, _HeaderData, _Params)
+	fmt.Print(_req)
+	 beego.Run()
+}
+
+/*
+通用的请求参数
+*/
+func GetBaseParam() map[string]interface{} {
+	_rt := make(map[string]interface{})
+	_rt["encryptId"] = "000010000000001"
+	_rt["apiVersion"] = 1
+	_rt["txnDate"] = time.Now().Unix()
+	return _rt
+}
+
+/*
+参数集排序Sign签名 根据key排序
+*/
+func SignParameters(mp map[string]interface{}, is_url bool) string {
+	_str := "{"
+	var newMp = make([]string, 0)
+	for k, _ := range mp {
+		newMp = append(newMp, k)
+	}
+	sort.Strings(newMp)
+	for _, v := range newMp {
+		_srt := ""
+		switch _value := mp[v].(type) {
+		case string:
+			_srt = _value
+		case int:
+			_srt = strconv.Itoa(_value)
+		case float64:
+			_srt = fmt.Sprintf("%.2f", _value)
+			//_srt = strconv.ParseFloat(fmt.Sprintf("%.2f", _value), 64)
+		}
+		if len(_srt) > 0 {
+			if is_url {
+				_str += v + php2go.URLEncode(_srt)
+			} else {
+				_str += "'" + v + "':'" + _srt + "',"
+			}
+		}
+	}
+	_str = php2go.Rtrim(_str, "&")
+	_str += "}"
+	//fmt.Println(_str)
+    
+	return _str
+}

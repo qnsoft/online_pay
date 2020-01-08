@@ -132,19 +132,19 @@ type Rt35_Model_Content struct {
 }
 
 /*
- 签约- 信还3.6. 支付卡开通发短信接口——请求响应对象
+ 签约- 信还7.1. 支付卡开通发短信接口——请求响应对象
 */
-type Rt36_Model struct {
+type Rt71_Model struct {
 	//基础对象
 	Rt_Base_Model
 	//业务对象
-	Content Rt36_Model_Content `json:"content"`
+	Content Rt71_Model_Content `json:"content"`
 }
 
 /*
 返回签约状态
 */
-type Rt36_Model_Content struct {
+type Rt71_Model_Content struct {
 	//状态码
 	IsSign string `json:"isSign"`
 	//商户订单号
@@ -152,7 +152,7 @@ type Rt36_Model_Content struct {
 }
 
 /*
-签约确认-信还3.7支付卡开通确认短信接口——请求响应对象
+签约确认-信还8.1支付卡开通确认短信接口——请求响应对象
 */
 type Rt37_Model struct {
 	//基础对象

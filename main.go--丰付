@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	_ "qnsoft/online_pay/routers"
-	"qnsoft/online_pay/utils/pay/fengfu"
-	"qnsoft/online_pay/utils/pay/paytool"
+	_ "github.com/qnsoft/online_pay/routers"
+	"github.com/qnsoft/online_pay/utils/pay/fengfu"
+	"github.com/qnsoft/online_pay/utils/pay/paytool"
 
 	"github.com/astaxie/beego"
 )

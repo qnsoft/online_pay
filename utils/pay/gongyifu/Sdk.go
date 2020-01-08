@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"strings"
 	"time"
-	"qnsoft/web_api/utils/DateHelper"
-	"qnsoft/web_api/utils/ErrorHelper"
-	"qnsoft/web_api/utils/Php2go"
-	"qnsoft/web_api/utils/StringHelper"
-	"qnsoft/web_api/utils/WebHelper"
+	"github.com/qnsoft/web_api/utils/DateHelper"
+	"github.com/qnsoft/web_api/utils/ErrorHelper"
+	"github.com/qnsoft/web_api/utils/Php2go"
+	"github.com/qnsoft/web_api/utils/StringHelper"
+	"github.com/qnsoft/web_api/utils/WebHelper"
 
 	"github.com/goinggo/mapstructure"
 )

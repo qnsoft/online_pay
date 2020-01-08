@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sort"
 	"strings"
-	"qnsoft/web_api/utils/ArryHelper"
-	php2go "qnsoft/web_api/utils/Php2go"
+	"github.com/qnsoft/web_api/utils/ArryHelper"
+	php2go "github.com/qnsoft/web_api/utils/Php2go"
 )
 
 /*

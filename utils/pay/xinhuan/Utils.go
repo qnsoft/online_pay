@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	php2go "qnsoft/web_api/utils/Php2go"
-	"qnsoft/web_api/utils/StringHelper"
-	"qnsoft/web_api/utils/WebHelper"
+	php2go "github.com/qnsoft/web_api/utils/Php2go"
+	"github.com/qnsoft/web_api/utils/StringHelper"
+	"github.com/qnsoft/web_api/utils/WebHelper"
 
 	"github.com/wenzhenxi/gorsa"
 )

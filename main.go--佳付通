@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	//	"time"
-	"qnsoft/online_pay/utils/pay/jiafutong"
-	//"qnsoft/web_api/utils/DateHelper"
+	"github.com/qnsoft/online_pay/utils/pay/jiafutong"
+	//"github.com/qnsoft/web_api/utils/DateHelper"
 )
 
 func main() {

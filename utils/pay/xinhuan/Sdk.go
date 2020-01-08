@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-	_ "qnsoft/online_pay/routers"
-	"qnsoft/online_pay/utils/pay/paytool"
-	date "qnsoft/web_api/utils/DateHelper"
-	"qnsoft/web_api/utils/ErrorHelper"
-	"qnsoft/web_api/utils/StringHelper"
+	_ "github.com/qnsoft/online_pay/routers"
+	"github.com/qnsoft/online_pay/utils/pay/paytool"
+	date "github.com/qnsoft/web_api/utils/DateHelper"
+	"github.com/qnsoft/web_api/utils/ErrorHelper"
+	"github.com/qnsoft/web_api/utils/StringHelper"
 )
 
 /*

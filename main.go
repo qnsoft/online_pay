@@ -10,7 +10,8 @@ import (
 	"encoding/pem"
 	"fmt"
 	"strings"
-	_ "qnsoft/online_pay/routers"
+
+	_ "github.com/qnsoft/online_pay/routers"
 
 	"github.com/astaxie/beego"
 	"github.com/wenzhenxi/gorsa"

@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-	GongYiFu "qnsoft/online_pay/utils/pay/gongyifu"
-	"qnsoft/web_api/controllers/Token"
-	date "qnsoft/web_api/utils/DateHelper"
-	"qnsoft/web_api/utils/ErrorHelper"
-	"qnsoft/web_api/utils/StringHelper"
+	GongYiFu "github.com/qnsoft/online_pay/utils/pay/gongyifu"
+	"github.com/qnsoft/web_api/controllers/Token"
+	date "github.com/qnsoft/web_api/utils/DateHelper"
+	"github.com/qnsoft/web_api/utils/ErrorHelper"
+	"github.com/qnsoft/web_api/utils/StringHelper"
 )
 
 /**

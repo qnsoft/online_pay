@@ -1,0 +1,346 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+	"qnsoft/online_pay/utils/pay/tong_lian"
+	"qnsoft/web_api/utils/DateHelper"
+)
+
+func main() {
+	// var _model TongLian.Mode_22
+	// _model.Orgid = "201000003530"
+	// _model.Appid = "6666678"
+	// _model.Version = "11"
+	// _model.Randomstr = "123456"
+	// _model.Reqip = "127.0.0.1"
+	// _model.Reqtime = date.FormatDate(time.Now(), "yyMMddHHmmss") + strconv.Itoa(php2go.Rand(10, 99))
+	/*---------基础参数完毕开始业务参数----------*/
+
+	// var _model TongLian.Mode_25
+	// _model.Cusid = "13938202388"
+	// _model.Meruserid = "13938202388"
+	// _model.Cardno = "13938202388"
+	// _model.Acctname = "13938202388"
+	// _model.Accttype = "13938202388"
+	// _model.Validdate = "13938202388"
+	// _model.Cvv2 = "13938202388"
+	// _model.Idno = "13938202388"
+	// _model.Tel = "13938202388"
+	// TongLian.Bindcard(_model)
+
+	//---------------------通联测试接口-------------------//
+	//商户进件
+	//Addcus()
+	//Cusquery()
+	//商户结算/费率信息修改(文档2.4)
+	//Updatesettinfo()
+	//商户绑定消费银行卡
+	//Bindcard()
+	//重新获取绑卡验证码(文档2.6)
+	//Resendbindsms()
+	//商户绑定银行卡确认(文档2.7)
+	//Bindcardconfirm()
+	//商户解绑消费银行卡(文档2.8)
+	//Unbindcard()
+	//快捷交易支付申请(文档2.9)
+	//Applypay()
+	//快捷交易支付确认(文档2.10)
+	//Confirmpay()
+	//快捷支付短信重新获取(文档2.11)
+	//Paysms()
+	//快捷小额免短信支付(文档2.12)
+	//Quickpass()
+	//快捷交易查询(文档2.13)
+	//Query()
+	//余额查询(文档2.14)
+	//Balance()
+	//提现(文档2.15)
+	//Withdraw()
+	//付款(文档2.16)
+	//Pay()
+	//提现(付款)交易查询返回对象(文档2.17)
+	/* 2.18 是异步回传处理 */
+	//Querypay()
+	//对账文件下载(文档2.19)
+	//Download()
+	//查询绑卡协议号(文档2.20)
+	//Getagree()
+	//查询地区对应可用行业分类代码(文档2.21)
+	FindMccByAreacode()
+}
+
+//商户进件(文档2.2)
+func Addcus() {
+	var _model TongLian.Model_22
+	_model.Belongorgid = "201000003530"                           //拓展代理商号
+	_model.Outcusid = date.FormatDate(time.Now(), "yyMMddHHmmss") // "201906191047"   //商户外部唯一标记
+	_model.Cusname = "史海振"                                        //商户名称
+	_model.Cusshortname = "史海振"                                   //商户简称
+	_model.Merprovice = "340000"                                  //所在省
+	_model.Areacode = "341300"                                    //所在市
+	_model.Legal = "史海振"                                          //法人姓名
+	_model.Idno = "410526198204182314"                            //法人代表证件号
+	_model.Phone = "18537116604"                                  //法人手机号码
+	_model.Address = "河南郑州"                                       //注册地址
+	_model.Acctid = "6225883714523185"                            //账户号
+	_model.Acctname = "史海振"                                       //账户名
+	_model.Accttp = "00"                                          //卡折类型(00-借记卡,01-存折)
+	_model.Expanduser = "河南"                                      //拓展人
+	// _prodlist := []TongLian.Prod_Model{}
+	// _prodlist = append(_prodlist, TongLian.Prod_Model{Trxcode: "QUICKPAY_OF_NP", Feerate: "0.6"})
+	// _model.Prodlist = _prodlist //支付产品信息列表(产品列表的json)
+	_model.Settfee = "2.00" //提现手续费
+	json_model := TongLian.Addcus(_model)
+	/* fmt.Printf("%#v", sss) */
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//商户进件状态查询(文档2.3)
+func Cusquery() {
+	var _model TongLian.Model_23
+	_model.Outcusid = "190626192040"
+	json_model := TongLian.Cusquery(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//商户结算/费率信息修改(文档2.4)
+func Updatesettinfo() {
+	var _model TongLian.Model_24
+	_model.Cusid = "101000003717"
+	_model.Acctid = "6225883714523185"
+	_model.Accttp = "00"
+	_model.Prodlist = "[{'trxcode':'QUICKPAY_OF_HP','feerate':'0.6'}]"
+	_model.Settfee = "2.00"
+	json_model := TongLian.Updatesettinfo(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//商户绑定消费银行卡(文档2.5)
+func Bindcard() {
+	var _model TongLian.Model_25
+	_model.Cusid = "101000003717"
+	_model.Meruserid = "190626192040"
+	_model.Cardno = "6225883714523185"
+	_model.Acctname = "史海振"
+	_model.Accttype = "00"
+	_model.Validdate = "2306"
+	_model.Cvv2 = "139"
+	_model.Idno = "410526198204182314"
+	_model.Tel = "18537116604"
+	json_model := TongLian.Bindcard(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//重新获取绑卡验证码(文档2.6)
+func Resendbindsms() {
+	var _model TongLian.Model_26
+	_model.Cusid = "101000003717"
+	_model.Meruserid = "190626192040"
+	_model.Cardno = "6225883714523185"
+	_model.Acctname = "史海振"
+	_model.Accttype = "00"
+	_model.Validdate = "2306"
+	_model.Cvv2 = "139"
+	_model.Idno = "410526198204182314"
+	_model.Tel = "18537116604"
+	_model.Thpinfo = ""
+	json_model := TongLian.Resendbindsms(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//商户绑定银行卡确认(文档2.7)
+func Bindcardconfirm() {
+	var _model TongLian.Model_27
+	_model.Cusid = "101000003717"
+	_model.Meruserid = "190626192040"
+	_model.Cardno = "6225883714523185"
+	_model.Acctname = "史海振"
+	_model.Accttype = "00"
+	_model.Validdate = "2306"
+	_model.Cvv2 = "139"
+	_model.Idno = "410526198204182314"
+	_model.Tel = "18537116604"
+	_model.Smscode = "1234"
+	_model.Thpinfo = ""
+	json_model := TongLian.Bindcardconfirm(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//商户解绑消费银行卡(文档2.8)
+func Unbindcard() {
+	var _model TongLian.Model_28
+	_model.Cusid = "101000003717"
+	_model.Cardno = "6225883714523185"
+	json_model := TongLian.Unbindcard(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//快捷交易支付申请(文档2.9)
+func Applypay() {
+	var _model TongLian.Model_29
+	_model.Cusid = "101000003717"
+	_model.Orderid = "6225883714523185"
+	_model.Agreeid = ""
+	_model.Trxcode = ""
+	_model.Amount = ""
+	_model.Fee = ""
+	_model.Currency = ""
+	_model.Subject = ""
+	_model.Validtime = ""
+	_model.City = ""
+	_model.Mccid = ""
+	_model.Trxreserve = ""
+	_model.Notifyurl = ""
+	json_model := TongLian.Applypay(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//快捷交易支付确认(文档2.10)
+func Confirmpay() {
+	var _model TongLian.Model_210
+	_model.Cusid = "101000003717"
+	_model.Trxid = ""
+	_model.Agreeid = ""
+	_model.Smscode = ""
+	_model.Thpinfo = ""
+	json_model := TongLian.Confirmpay(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//快捷支付短信重新获取(文档2.11)
+func Paysms() {
+	var _model TongLian.Model_211
+	_model.Cusid = "101000003717"
+	_model.Trxid = ""
+	_model.Agreeid = ""
+	_model.Thpinfo = ""
+	json_model := TongLian.Paysms(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//快捷小额免短信支付(文档2.12)
+func Quickpass() {
+	var _model TongLian.Model_212
+	_model.Cusid = "101000003717"
+	_model.Orderid = "6225883714523185"
+	_model.Agreeid = ""
+	_model.Trxcode = ""
+	_model.Amount = "800"
+	_model.Fee = ""
+	_model.Currency = ""
+	_model.Subject = ""
+	_model.Validtime = ""
+	_model.City = ""
+	_model.Mccid = ""
+	_model.Trxreserve = ""
+	_model.Notifyurl = ""
+	json_model := TongLian.Quickpass(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//快捷交易查询(文档2.13)
+func Query() {
+	var _model TongLian.Model_213
+	_model.Cusid = "101000003717"
+	_model.Orderid = "6225883714523185"
+	_model.Trxid = ""
+	_model.Date = "20190629"
+	json_model := TongLian.Query(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//余额查询(文档2.14)
+func Balance() {
+	var _model TongLian.Model_214
+	_model.Cusid = "101000003717"
+	json_model := TongLian.Balance(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//提现(文档2.15)
+func Withdraw() {
+	var _model TongLian.Model_215
+	_model.Cusid = "101000003717"
+	_model.Orderid = "6225883714523185"
+	_model.Amount = "300"
+	_model.Isall = ""
+	_model.Fee = ""
+	_model.Trxreserve = ""
+	_model.Notifyurl = "http://wwww.baidu.com"
+	json_model := TongLian.Withdraw(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//付款(文档2.16)
+func Pay() {
+	var _model TongLian.Model_216
+	_model.Cusid = "101000003717"
+	_model.Orderid = "6225883714523185"
+	_model.Amount = "300"
+	_model.Isall = ""
+	_model.Agreeid = ""
+	_model.Fee = ""
+	_model.Trxreserve = ""
+	_model.Notifyurl = "http://wwww.baidu.com"
+	json_model := TongLian.Pay(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//提现(付款)交易查询返回对象(文档2.17)
+func Querypay() {
+	var _model TongLian.Model_217
+	_model.Cusid = "101000003717"
+	_model.Orderid = "6225883714523185"
+	_model.Trxid = "300"
+	_model.Date = "20190629"
+	json_model := TongLian.Querypay(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//对账文件下载(文档2.19)
+func Download() {
+	var _model TongLian.Model_219
+	_model.Cusid = "101000003717"
+	_model.Trxdate = "20190629"
+	json_model := TongLian.Download(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//查询绑卡协议号(文档2.20)
+func Getagree() {
+	var _model TongLian.Model_220
+	_model.Cusid = "101000003717"
+	_model.Cardno = "6225883714523185"
+	json_model := TongLian.Getagree(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}
+
+//查询地区对应可用行业分类代码(文档2.21)
+func FindMccByAreacode() {
+	var _model TongLian.Model_221
+	_model.Areacode = "110"
+	_model.Trxcode = "QUICKPAY_OL_HP"
+	json_model := TongLian.FindMccByAreacode(_model)
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}

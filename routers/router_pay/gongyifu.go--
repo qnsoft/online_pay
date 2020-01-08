@@ -1,0 +1,38 @@
+package router_pay
+
+import (
+	"qnsoft/online_pay/controllers/Pay"
+
+	"github.com/astaxie/beego"
+)
+
+//工易付
+func GongYiFu() {
+	//S101.商户信息提交
+	beego.Router("/api/pay/gongyifu/Gyf_101", &Pay.GongYiFu_Controller{}, "post:Gyf_101")
+	//S102.商户信息修改
+	beego.Router("/api/pay/gongyifu/Gyf_102", &Pay.GongYiFu_Controller{}, "post:Gyf_102")
+	//S103.商户信息费率
+	beego.Router("/api/pay/gongyifu/Gyf_103", &Pay.GongYiFu_Controller{}, "post:Gyf_103")
+	//S201.银联页面绑卡
+	beego.Router("/api/pay/gongyifu/Gyf_201", &Pay.GongYiFu_Controller{}, "post,get:Gyf_201")
+	//S201.银联页面绑卡成功通知页面
+	beego.Router("/api/pay/gongyifu/Gyf_201_Ok", &Pay.GongYiFu_Controller{}, "post:Gyf_201_Ok")
+	//S202.绑卡查询
+	beego.Router("/api/pay/gongyifu/Gyf_202", &Pay.GongYiFu_Controller{}, "post:Gyf_202")
+	//S301.订单查询
+	beego.Router("/api/pay/gongyifu/Gyf_301", &Pay.GongYiFu_Controller{}, "post:Gyf_301")
+	//S302.快捷支付
+	beego.Router("/api/pay/gongyifu/Gyf_302", &Pay.GongYiFu_Controller{}, "post:Gyf_302")
+	//S302.落地云闪付支付
+	beego.Router("/api/pay/gongyifu/Gyf_302_A", &Pay.GongYiFu_Controller{}, "post:Gyf_302_A")
+	//S302.子商户结算接口
+	beego.Router("/api/pay/gongyifu/Gyf_302_B", &Pay.GongYiFu_Controller{}, "post:Gyf_302_B")
+	//S302.子商户余额查询
+	beego.Router("/api/pay/gongyifu/Gyf_302_C", &Pay.GongYiFu_Controller{}, "post:Gyf_302_C")
+
+	//S401.绑卡异步通知
+	beego.Router("/api/pay/gongyifu/Gyf_S401", &Pay.GongYiFu_Controller{}, "post:Gyf_S401")
+	//S402.交易异步通知
+	beego.Router("/api/pay/gongyifu/Gyf_S402", &Pay.GongYiFu_Controller{}, "post:Gyf_S402")
+}

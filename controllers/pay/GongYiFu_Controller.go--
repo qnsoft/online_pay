@@ -1,0 +1,272 @@
+package Pay
+
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+	GongYiFu "qnsoft/online_pay/utils/pay/gongyifu"
+	"qnsoft/web_api/controllers/Token"
+	date "qnsoft/web_api/utils/DateHelper"
+	"qnsoft/web_api/utils/ErrorHelper"
+	"qnsoft/web_api/utils/StringHelper"
+)
+
+/**
+*支付——工易付控制器实体
+ */
+type GongYiFu_Controller struct {
+	Token.BaseController
+}
+
+/*
+工易付-S101.商户信息提交
+*/
+func (this *GongYiFu_Controller) Gyf_101() {
+	_model_101 := GongYiFu.Model_101{
+		MerchName:    "河南联九舟网络科技有限公司",
+		Name:         "宋晓辉",
+		Phone:        "13938202388",
+		IdNo:         "410185198209190514",
+		MerchAddress: "郑州市郑汴路环球大厦B座2303",
+		CardId:       "6214623121001278490",
+		FeeRate:      "45",  //费率0.68%
+		ExternFee:    "100", //手续费单位分
+		Remark:       "",
+	}
+	_model_rt_101 := GongYiFu.Gyf_S101(_model_101)
+	// _str_json_101, _ := json.Marshal(_model_rt_101)
+	// fmt.Print("%s", string(_str_json_101))
+	this.Data["json"] = _model_rt_101
+	this.ServeJSON()
+}
+
+/*
+工易付-S102.商户信息修改
+*/
+func (this *GongYiFu_Controller) Gyf_102() {
+	_model_102 := GongYiFu.Model_102{
+		SubMerchId: "SMCH10470212909113",
+		Phone:      "15638905677",
+		CardId:     "6226223001466633",
+	}
+	_model_rt_102 := GongYiFu.Gyf_S102(_model_102)
+	// _str_json_102, _ := json.Marshal(_model_rt_102)
+	// fmt.Print("%s", string(_str_json_102))
+	this.Data["json"] = _model_rt_102
+	this.ServeJSON()
+}
+
+/*
+工易付-S103.商户信息费率
+*/
+func (this *GongYiFu_Controller) Gyf_103() {
+	_model_103 := GongYiFu.Model_103{
+		SubMerchId: "SMCH10470212909113",
+		FeeRate:    "58",
+		ExternFee:  "100",
+	}
+	_model_rt_103 := GongYiFu.Gyf_S103(_model_103)
+	// _str_json_103, _ := json.Marshal(_model_rt_103)
+	// fmt.Print("%s", string(_str_json_103))
+	this.Data["json"] = _model_rt_103
+	this.ServeJSON()
+}
+
+/*
+工易付-S201.银联页面绑卡
+*/
+func (this *GongYiFu_Controller) Gyf_201() {
+	_OrderId := date.FormatDate(time.Now(), "yyMMddHHmmss") + StringHelper.GetRandomNum(4)
+	ErrorHelper.LogInfo("绑卡订单号：", _OrderId)
+	_model_201 := GongYiFu.Model_201{
+		SubMerchId: "SMCH10470212929804",                                     //商户编号
+		Name:       "宋晓辉",                                                    //法人姓名
+		Phone:      "13938202388",                                            //法人电话
+		IdNo:       "410185198209190514",                                     //身份证号
+		CardId:     "6225768311530149",                                       //交易卡号
+		NotifyUrl:  "http://test1001.ljz789.com/api/pay/gongyifu/Gyf_S401",   //异步通知地址
+		FrontUrl:   "http://test1001.ljz789.com/api/pay/gongyifu/Gyf_201_Ok", //页面通知地址
+		OrderId:    _OrderId,                                                 //请求流水号
+		DeviceId:   "358588070801255",                                        //设备ID 安卓:IMEI，iOS:IDFV，PC:硬盘序列号（若不填大额交易限额会被银联风控）
+		IpAddress:  "39.97.111.217",                                          //请求IP地址 公网IP地址（若不填大额交易限额会被风控）（付款客户端IP）
+	}
+	_model_rt_201 := GongYiFu.Gyf_S201(_model_201)
+	// _str_json_201, _ := json.Marshal(_model_rt_201)
+	// fmt.Print("%s", string(_str_json_201))
+	ErrorHelper.LogInfo(_model_rt_201)
+	if len(_model_rt_201.Data.Html) > 0 {
+		this.Data["qianyue_json"] = _model_rt_201
+		this.TplName = "gongyifu/qianyue.html"
+	} else {
+		this.Data["json"] = _model_rt_201
+		this.ServeJSON()
+	}
+}
+
+/*
+签约成功通知页面
+*/
+func (this *GongYiFu_Controller) Gyf_201_Ok() {
+	this.Data["qianyue_ok"] = nil
+	this.TplName = "gongyifu/qianyue_ok.html"
+}
+
+/*
+工易付-S202.绑卡查询
+*/
+func (this *GongYiFu_Controller) Gyf_202() {
+	_model_202 := GongYiFu.Model_202{
+		SubMerchId: "SMCH10470212929804", //商户编号
+		CardId:     "6225768311530149",   //交易卡号
+	}
+	_model_rt_202 := GongYiFu.Gyf_S202(_model_202)
+	// _str_json_202, _ := json.Marshal(_model_rt_202)
+	// fmt.Print("%s", string(_str_json_202))
+	this.Data["json"] = _model_rt_202
+	this.ServeJSON()
+}
+
+/*
+工易付-S301.订单查询
+*/
+func (this *GongYiFu_Controller) Gyf_301() {
+	_model_301 := GongYiFu.Model_301{
+		OrderId: "1909290916278874",
+		//SubMerchId: "SMCH99990212558313",
+	}
+	_model_rt_301 := GongYiFu.Gyf_S301(_model_301)
+
+	// 	if _b_ret != nil && len(_b_ret.Code) > 0 {
+	// 		if _b_ret.Code == "0000" {
+	// 			return map[string]interface{}{"status": 0, "msg": _b_ret.Msg, "ret_data": _b_ret.Data, "json": _b_json}
+	// 		}
+	// 		return map[string]interface{}{"status": 1, "msg": _b_ret.Msg, "ret_data": _b_ret.Data, "json": _b_json}
+	// 	}
+	// }
+	// return map[string]interface{}{"status": 1, "msg": "解密失败", "json": _json}
+
+	//fmt.Print("%#v", str_301)
+	this.Data["json"] = _model_rt_301
+	this.ServeJSON()
+}
+
+/*
+工易付-S302.快捷支付
+*/
+func (this *GongYiFu_Controller) Gyf_302() {
+	_OrderId := date.FormatDate(time.Now(), "yyMMddHHmmss") + StringHelper.GetRandomNum(4)
+	_model_302 := GongYiFu.Model_302{
+		SubMerchId: "SMCH10470212929804",
+		OrderId:    _OrderId, //订单编号
+		Name:       "宋晓辉",
+		Phone:      "13938202388",
+		IdNo:       "410185198209190514",
+		CardId:     "6225768311530149",
+		NotifyUrl:  "http://test1001.ljz789.com/api/pay/gongyifu/Gyf_S402",
+		Amount:     "5",
+		GoodsName:  "淘客商城订单",
+		CardType:   "02",              //卡类型 01 借记卡=储蓄卡 02 贷记卡=信用卡
+		Cvv:        "999",             //ccv码
+		ExpDate:    "1120",            //有效期
+		DeviceId:   "358588070801255", //设备ID 安卓:IMEI，iOS:IDFV，PC:硬盘序列号（若不填大额交易限额会被银联风控）
+		IpAddress:  "39.97.111.217",   //请求IP地址 公网IP地址（若不填大额交易限额会被风控）（付款客户端IP）
+	}
+	_model_rt_302 := GongYiFu.Gyf_S302(_model_302)
+	_str_json_302, _ := json.Marshal(_model_rt_302)
+	fmt.Print("%s", string(_str_json_302))
+
+	this.Data["json"] = _model_rt_302
+	this.ServeJSON()
+}
+
+/*
+工易付-S302.落地云闪付支付接口
+*/
+func (this *GongYiFu_Controller) Gyf_302_A() {
+	_OrderId := date.FormatDate(time.Now(), "yyMMddHHmmss") + StringHelper.GetRandomNum(4)
+	ErrorHelper.LogInfo("交易订单号：", _OrderId)
+	_model_302_A := GongYiFu.Model_302_A{
+		SubMerchId: "SMCH10470212929804",                                   //子商户号
+		OrderId:    _OrderId,                                               //订单号
+		Name:       "宋晓辉",                                                  //法人姓名
+		Phone:      "13938202388",                                          //法人电话
+		IdNo:       "410185198209190514",                                   //身份证号
+		CardId:     "6225768311530149",                                     //交易卡号
+		NotifyUrl:  "http://test1001.ljz789.com/api/pay/gongyifu/Gyf_S402", //异步通知地址
+		Amount:     "500",                                                  //交易金额 单位（分）
+		GoodsName:  "商城订单" + _OrderId,                                      //订单名称
+		CardType:   "2",                                                    //卡类型 01 借记卡 02 贷记卡
+		Cvv:        "999",                                                  //安全码
+		ExpDate:    "1120",                                                 //有效期
+		DeviceId:   "358588070801255",                                      //设备ID 安卓:IMEI，iOS:IDFV，PC:硬盘序列号（若不填大额交易限额会被银联风控）
+		IpAddress:  "39.97.111.217",                                        //请求IP地址 公网IP地址（若不填大额交易限额会被风控）（付款客户端IP）
+	}
+	_model_rt_302_A := GongYiFu.Gyf_S302_A(_model_302_A)
+	// _str_json_302_A, _ := json.Marshal(_model_rt_302_A)
+	// fmt.Print("%s", string(_str_json_302_A))
+	this.Data["json"] = _model_rt_302_A
+	this.ServeJSON()
+}
+
+/*
+工易付-S302.子商户结算接口
+*/
+func (this *GongYiFu_Controller) Gyf_302_B() {
+	_OrderId := date.FormatDate(time.Now(), "yyMMddHHmmss") + StringHelper.GetRandomNum(4)
+	ErrorHelper.LogInfo("子商户结算订单号：", _OrderId)
+	_model_302_B := GongYiFu.Model_302_B{
+		SubMerchId: "SMCH10470212929804",                                   //子商户号
+		OrderId:    _OrderId,                                               //订单号
+		Name:       "宋晓辉",                                                  //法人姓名
+		Phone:      "13938202388",                                          //法人电话
+		IdNo:       "410185198209190514",                                   //身份证号
+		CardId:     "6258091711738406",                                     //交易卡号
+		NotifyUrl:  "http://test1001.ljz789.com/api/pay/gongyifu/Gyf_S402", //异步通知地址
+		Amount:     "200",                                                  //交易金额 单位（分）
+		Remark:     "",                                                     //备注
+	}
+	_model_rt_302_B := GongYiFu.Gyf_S302_B(_model_302_B)
+	// _str_json_302_A, _ := json.Marshal(_model_rt_302_A)
+	// fmt.Print("%s", string(_str_json_302_A))
+	this.Data["json"] = _model_rt_302_B
+	this.ServeJSON()
+}
+
+/*
+工易付-S302.子商户余额查询
+*/
+func (this *GongYiFu_Controller) Gyf_302_C() {
+	_OrderId := date.FormatDate(time.Now(), "yyMMddHHmmss") + StringHelper.GetRandomNum(4)
+	ErrorHelper.LogInfo("子商户结算订单号：", _OrderId)
+	_model_302_C := GongYiFu.Model_302_C{
+		SubMerchId: this.GetString("SubMerchId"), //商户编号
+	}
+	_model_rt_302_C := GongYiFu.Gyf_S302_C(_model_302_C)
+	// _str_json_302_A, _ := json.Marshal(_model_rt_302_A)
+	// fmt.Print("%s", string(_str_json_302_A))
+	this.Data["json"] = _model_rt_302_C
+	this.ServeJSON()
+}
+
+//////----------------异步回调处理-------------------------///////////////
+/*
+绑卡异步通知
+*/
+func (this *GongYiFu_Controller) Gyf_S401() {
+	ErrorHelper.LogInfo("绑卡异步通知：")
+	_json := map[string]interface{}{"orderId": this.GetString("orderId"), "cardId": this.GetString("cardId"), "token": this.GetString("token"), "respCode": this.GetString("respCode"), "respDesc": this.GetString("respDesc"), "orderTime": this.GetString("orderTime"), "sign": this.GetString("sign")}
+	ErrorHelper.LogInfo(_json)
+	this.Data["json"] = _json
+	this.ServeJSON()
+}
+
+/*
+S402.交易异步通知
+*/
+func (this *GongYiFu_Controller) Gyf_S402() {
+	ErrorHelper.LogInfo("交易异步通知：")
+	_json := map[string]interface{}{"orderId": this.GetString("orderId"), "status": this.GetString("status"), "respCode": this.GetString("respCode"), "respDesc": this.GetString("respDesc"), "orderTime": this.GetString("orderTime"), "sign": this.GetString("sign")}
+	ErrorHelper.LogInfo(_json)
+	this.Data["json"] = _json
+	this.ServeJSON()
+}

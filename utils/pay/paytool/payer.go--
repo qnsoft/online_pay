@@ -1,0 +1,19 @@
+package paytool
+
+/*
+信用卡接口
+*/
+type CardPayer interface {
+	//卡片签约接口
+	CardSigner(_model CardModel, args ...interface{}) interface{}
+	//卡片签约确认接口
+	CardSignConfirmer(_model CardModel, args ...interface{}) interface{}
+	//卡片出金接口
+	CardOuter(_model CardOutModel, args ...interface{}) interface{}
+	//卡片入金接口
+	CardIner(_model CardInModel, args ...interface{}) interface{}
+	//卡片出金订单查询接口
+	CardOutOrder(args ...interface{}) interface{}
+	//卡片入金订单查询接口
+	CardInOrder(args ...interface{}) interface{}
+}

@@ -1,0 +1,34 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	//	"time"
+	"qnsoft/online_pay/utils/pay/jiafutong"
+	//"qnsoft/web_api/utils/DateHelper"
+)
+
+func main() {
+	//商户注册(文档4.1.1)
+	MemberReg()
+}
+
+//商户注册(文档4.1.1)
+func MemberReg() {
+	var _model JiaFuTong.Model_411
+	_model.MerCode = ""                    //商户编号
+	_model.MerName = "宋晓辉"                 //商户名称
+	_model.RealName = "宋晓辉"                //真实姓名
+	_model.MerAddress = "郑州市郑汴路环球大厦B座2303" //商户详细地址
+	_model.IdCard = "410185198209190514"   //身份证号码
+	_model.Mobile = "13938202388"          //手机号
+	_model.AccountName = "宋晓辉"             //结算户名
+	_model.AccountNo = ""                  //结算账号
+	_model.ReservedMobile = "13938202388"  //结算卡预留手机号
+	_model.SubBankCode = ""                //联行号
+	_model.SettleAccType = "2"             //结算户类型()
+	json_model := JiaFuTong.MemberReg(_model)
+	/* fmt.Printf("%#v", sss) */
+	_json, _ := json.Marshal(json_model)
+	fmt.Println(string(_json))
+}

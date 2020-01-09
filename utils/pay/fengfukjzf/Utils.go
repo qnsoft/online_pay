@@ -2,9 +2,9 @@ package fengfukjzf
 
 import (
 	"fmt"
-	php2go "github.com/qnsoft/web_api/utils/Php2go"
-	"github.com/qnsoft/web_api/utils/StringHelper"
-	"github.com/qnsoft/web_api/utils/WebHelper"
+	php2go "github.com/qnsoft/utils/Php2go"
+	"github.com/qnsoft/utils/StringHelper"
+	"github.com/qnsoft/utils/WebHelper"
 	"sort"
 	"strconv"
 	"strings"

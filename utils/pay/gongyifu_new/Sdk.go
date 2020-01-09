@@ -3,8 +3,8 @@ package GongYiFuNew
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/qnsoft/web_api/utils/ErrorHelper"
-	"github.com/qnsoft/web_api/utils/WebHelper"
+	"github.com/qnsoft/utils/ErrorHelper"
+	"github.com/qnsoft/utils/WebHelper"
 
 	"github.com/goinggo/mapstructure"
 )

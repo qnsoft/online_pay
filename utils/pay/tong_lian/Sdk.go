@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-	"github.com/qnsoft/web_api/utils/ErrorHelper"
-	"github.com/qnsoft/web_api/utils/WebHelper"
-	"github.com/qnsoft/web_api/utils/php2go"
+	"github.com/qnsoft/utils/ErrorHelper"
+	"github.com/qnsoft/utils/WebHelper"
+	"github.com/qnsoft/utils/php2go"
 )
 
 //商户进件(文档2.2)

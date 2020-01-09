@@ -5,7 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io/ioutil"
-	"github.com/qnsoft/web_api/utils/StringHelper"
+	"github.com/qnsoft/utils/StringHelper"
 	"strings"
 
 	uuid "github.com/satori/go.uuid"

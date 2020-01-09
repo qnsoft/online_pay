@@ -3,7 +3,7 @@ package JiaFuTong
 import (
 	"sort"
 	"strconv"
-	php2go "github.com/qnsoft/web_api/utils/Php2go"
+	php2go "github.com/qnsoft/utils/Php2go"
 )
 
 var (

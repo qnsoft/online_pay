@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
-	"github.com/qnsoft/web_api/utils/ErrorHelper"
-	"github.com/qnsoft/web_api/utils/StringHelper"
+	"github.com/qnsoft/utils/ErrorHelper"
+	"github.com/qnsoft/utils/StringHelper"
 
 	"github.com/wenzhenxi/gorsa"
 	"golang.org/x/text/encoding/simplifiedchinese"

@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-	"github.com/qnsoft/web_api/utils/ErrorHelper"
-	php2go "github.com/qnsoft/web_api/utils/Php2go"
-	"github.com/qnsoft/web_api/utils/StringHelper"
-	"github.com/qnsoft/web_api/utils/WebHelper"
+	"github.com/qnsoft/utils/ErrorHelper"
+	php2go "github.com/qnsoft/utils/Php2go"
+	"github.com/qnsoft/utils/StringHelper"
+	"github.com/qnsoft/utils/WebHelper"
 )
 
 /*
